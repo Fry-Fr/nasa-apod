@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function App() {
+  const [apod, setApod] = useState({});
+  useEffect(() => {
+    axios
+    .get(`https://api.nasa.gov/planetary/apod?api_key=${'GClrb3jr4G9vAjWzGsGBNVXaKFfiAnsRTaTvRReL'}`)
+      .then(res => {
+        setApod(res.data)
+      })
+      .catch(err => console.log(err))
+  },[]);
+console.log(apod)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <header>
+      <h1>{apod.title}</h1>
+      <h3>{apod.date}</h3>
+    </header>
+    <main>
+      <h4>{apod.copyright}</h4>
+      {apod.media_type === 'image'
+       ? <img src={apod.url} alt={apod.title} />
+       : <></>}
+      {apod.media_type === 'video'
+       ? <iframe src={apod.url + '&mute=1'} width='1220px' height='720px' title={apod.title} />
+       : <></>}
+      <p>{apod.explanation}</p>
+    </main>
+    </>
   );
 }
 
