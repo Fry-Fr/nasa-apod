@@ -1,3 +1,3 @@
 #### React-App
-# APOD
+# NASA APOD
 ### Fetches the NASA Astronomy Picture Of the Day
